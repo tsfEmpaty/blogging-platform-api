@@ -1,48 +1,54 @@
-# Blogging Platform API
+# 📝 Blogging Platform API
 
-A simple RESTful API for a personal blogging platform built with Python and FastAPI.
+A small but production-ready RESTful API for a personal blogging platform. Built with **FastAPI**, **async SQLAlchemy**, and **SQLite**.
 
-## Features
+## ✨ Features
 
 - Create, read, update, and delete blog posts
 - Search posts by title, content, or category
-- Input validation and clear error responses
-- Layered architecture ready for real database integration
+- Strict input validation with `400 Bad Request` responses
+- Fully async data layer (SQLite via `aiosqlite`)
+- Layered architecture: router → service → repository
+- 12 automated tests with pytest
 
-## Tech Stack
+## 🛠 Tech Stack
 
 - **Framework:** [FastAPI](https://fastapi.tiangolo.com/)
 - **Language:** Python 3.13+
 - **Package Manager:** [uv](https://docs.astral.sh/uv/)
-- **Testing:** pytest + httpx
+- **Database:** SQLite + async SQLAlchemy (`aiosqlite`)
+- **Testing:** pytest + pytest-asyncio + httpx
 
-## Project Structure
+## 📁 Project Structure
 
 ```text
 .
 ├── app/
 │   ├── api/
-│   │   ├── deps.py          # Dependency injection helpers
+│   │   ├── deps.py              # Dependency injection chain
 │   │   └── routes/
-│   │       └── posts.py     # HTTP routes for posts
+│   │       └── posts.py         # HTTP routes for posts
 │   ├── core/
-│   │   └── config.py        # Application settings
+│   │   ├── config.py            # Application settings
+│   │   └── database.py          # Async engine & session factory
 │   ├── models/
-│   │   ├── __init__.py
-│   │   └── post_create.py   # Pydantic request schemas
+│   │   ├── __init__.py          # Public model exports
+│   │   ├── post.py              # SQLAlchemy ORM model
+│   │   ├── post_create.py       # Pydantic request schema
+│   │   └── post_response.py     # Pydantic response schema
 │   ├── repositories/
-│   │   └── post_repository.py  # Data access layer
+│   │   └── post_repository.py   # Async data access layer
 │   ├── services/
-│   │   └── post_service.py  # Business logic layer
-│   └── main.py              # FastAPI application entry point
+│   │   └── post_service.py      # Business logic layer
+│   └── main.py                  # FastAPI entry point
 ├── tests/
-│   ├── conftest.py
-│   └── test_posts.py        # API test suite
+│   ├── conftest.py              # Test fixtures & DB override
+│   └── test_posts.py            # API test suite
 ├── pyproject.toml
 └── README.md
 ```
 
-## Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 
@@ -58,7 +64,13 @@ uv sync
 ### Run the Server
 
 ```bash
-uv run app/main.py
+uv run uvicorn app.main:app --host 0.0.0.0 --port 8000
+```
+
+For development with auto-reload:
+
+```bash
+uv run uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
 The API will be available at [http://localhost:8000](http://localhost:8000).
@@ -67,6 +79,12 @@ The API will be available at [http://localhost:8000](http://localhost:8000).
 
 ```bash
 uv run pytest
+```
+
+### Run Tests with Coverage
+
+```bash
+uv run pytest --cov=app --cov-report=term-missing
 ```
 
 ## API Endpoints
