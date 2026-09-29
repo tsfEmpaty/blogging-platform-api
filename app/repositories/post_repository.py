@@ -1,5 +1,3 @@
-from datetime import datetime, timezone
-
 from sqlalchemy import or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -16,7 +14,7 @@ class PostRepository:
             title=post.title,
             content=post.content,
             category=post.category,
-            tags=",".join(post.tags),
+            tags=",".join(post.tags) if post.tags else "",
         )
         self.session.add(db_post)
         await self.session.commit()
@@ -48,8 +46,7 @@ class PostRepository:
         db_post.title = post.title
         db_post.content = post.content
         db_post.category = post.category
-        db_post.tags = ",".join(post.tags)
-        db_post.updated_at = datetime.now(timezone.utc)
+        db_post.tags = ",".join(post.tags) if post.tags else ""
         await self.session.commit()
         await self.session.refresh(db_post)
         return db_post
