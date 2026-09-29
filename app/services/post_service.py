@@ -1,22 +1,43 @@
-from app.models import PostCreate
+from app.models import PostCreate, PostResponse
+from app.models.post import Post
 from app.repositories.post_repository import PostRepository
+
+
+def _to_response(post: Post) -> PostResponse:
+    return PostResponse(
+        id=post.id,
+        title=post.title,
+        content=post.content,
+        category=post.category,
+        tags=post.tags.split(",") if post.tags else [],
+        createdAt=post.created_at,
+        updatedAt=post.updated_at,
+    )
 
 
 class PostService:
     def __init__(self, repository: PostRepository):
         self.repository = repository
 
-    def create_post(self, post: PostCreate) -> dict:
-        raise NotImplementedError
+    async def create_post(self, post: PostCreate) -> PostResponse:
+        db_post = await self.repository.create(post)
+        return _to_response(db_post)
 
-    def get_posts(self, term: str | None = None) -> list[dict]:
-        raise NotImplementedError
+    async def get_posts(self, term: str | None = None) -> list[PostResponse]:
+        db_posts = await self.repository.get_all(term)
+        return [_to_response(p) for p in db_posts]
 
-    def get_post(self, post_id: int) -> dict:
-        raise NotImplementedError
+    async def get_post(self, post_id: int) -> PostResponse | None:
+        db_post = await self.repository.get_by_id(post_id)
+        if db_post is None:
+            return None
+        return _to_response(db_post)
 
-    def update_post(self, post_id: int, post: PostCreate) -> dict:
-        raise NotImplementedError
+    async def update_post(self, post_id: int, post: PostCreate) -> PostResponse | None:
+        db_post = await self.repository.update(post_id, post)
+        if db_post is None:
+            return None
+        return _to_response(db_post)
 
-    def delete_post(self, post_id: int) -> None:
-        raise NotImplementedError
+    async def delete_post(self, post_id: int) -> bool:
+        return await self.repository.delete(post_id)
