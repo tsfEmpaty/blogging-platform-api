@@ -3,9 +3,10 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     app_name: str = "Blogging Platform API"
-    host: str = "0.0.0.0"
+    host: str = "localhost"
     port: int = 8000
-    reload: bool = True
+    reload: bool = False
+    database_url: str = "sqlite+aiosqlite:///./blogging.db"
 
 
 settings = Settings()
