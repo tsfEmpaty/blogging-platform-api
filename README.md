@@ -1,8 +1,15 @@
-# 📝 Blogging Platform API
+# Blogging Platform API
+
+[![Python](https://img.shields.io/badge/Python-3.13+-blue.svg)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688.svg)](https://fastapi.tiangolo.com/)
+[![uv](https://img.shields.io/badge/uv-package%20manager-8A2BE2.svg)](https://docs.astral.sh/uv/)
+[![Tests](https://img.shields.io/badge/tests-12%20passing-brightgreen.svg)]()
+[![Coverage](https://img.shields.io/badge/coverage-76%25-brightgreen.svg)]()
+[![License](https://img.shields.io/badge/license-educational-lightgrey.svg)]()
 
 A small but production-ready RESTful API for a personal blogging platform. Built with **FastAPI**, **async SQLAlchemy**, and **SQLite**.
 
-## ✨ Features
+## Features
 
 - Create, read, update, and delete blog posts
 - Search posts by title, content, or category
@@ -11,15 +18,17 @@ A small but production-ready RESTful API for a personal blogging platform. Built
 - Layered architecture: router → service → repository
 - 12 automated tests with pytest
 
-## 🛠 Tech Stack
+## Tech Stack
 
-- **Framework:** [FastAPI](https://fastapi.tiangolo.com/)
-- **Language:** Python 3.13+
-- **Package Manager:** [uv](https://docs.astral.sh/uv/)
-- **Database:** SQLite + async SQLAlchemy (`aiosqlite`)
-- **Testing:** pytest + pytest-asyncio + httpx
+| Category     | Technology                                              |
+|--------------|---------------------------------------------------------|
+| Framework    | [FastAPI](https://fastapi.tiangolo.com/)                |
+| Language     | Python 3.13+                                            |
+| Package Manager | [uv](https://docs.astral.sh/uv/)                      |
+| Database     | SQLite + async SQLAlchemy (`aiosqlite`)                 |
+| Testing      | pytest + pytest-asyncio + httpx                       |
 
-## 📁 Project Structure
+## Project Structure
 
 ```text
 .
@@ -48,7 +57,7 @@ A small but production-ready RESTful API for a personal blogging platform. Built
 └── README.md
 ```
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -150,11 +159,13 @@ curl -X DELETE http://localhost:8000/posts/1
 
 ## Status Codes
 
-- `201 Created` — resource created successfully
-- `200 OK` — request succeeded
-- `204 No Content` — resource deleted successfully
-- `400 Bad Request` — validation error
-- `404 Not Found` — resource not found
+| Code | Meaning                  | When it happens              |
+|------|--------------------------|------------------------------|
+| 201  | Created                  | Resource created successfully |
+| 200  | OK                       | Request succeeded            |
+| 204  | No Content               | Resource deleted successfully |
+| 400  | Bad Request              | Validation error             |
+| 404  | Not Found                | Resource not found           |
 
 ## License
 
