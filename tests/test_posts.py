@@ -46,10 +46,10 @@ class TestGetPosts:
         assert response.status_code == 200
         data = response.json()
         assert len(data) == 1
-        searchable = " ".join(
-            [data[0]["title"], data[0]["content"], data[0]["category"]]
+        post = data[0]
+        assert "tech" in " ".join(
+            [post["title"], post["content"], post["category"]]
         ).lower()
-        assert "tech" in searchable
 
     def test_search_posts_by_term_returns_empty_list_when_no_match(
         self, client: TestClient, sample_post
