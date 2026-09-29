@@ -57,4 +57,3 @@ async def delete_post(
     deleted = await service.delete_post(post_id)
     if not deleted:
         raise HTTPException(status_code=404, detail="Post not found")
-    return None
