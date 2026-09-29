@@ -1,6 +1,14 @@
+from datetime import datetime, timezone
+
 from app.models import PostCreate, PostResponse
 from app.models.post import Post
 from app.repositories.post_repository import PostRepository
+
+
+def _format_datetime(value: datetime) -> str:
+    if value.tzinfo is None:
+        value = value.replace(tzinfo=timezone.utc)
+    return value.strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 def _to_response(post: Post) -> PostResponse:
@@ -9,9 +17,9 @@ def _to_response(post: Post) -> PostResponse:
         title=post.title,
         content=post.content,
         category=post.category,
-        tags=post.tags.split(",") if post.tags else [],
-        createdAt=post.created_at,
-        updatedAt=post.updated_at,
+        tags=[tag for tag in post.tags.split(",") if tag],
+        createdAt=_format_datetime(post.created_at),
+        updatedAt=_format_datetime(post.updated_at),
     )
 
 
