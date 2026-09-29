@@ -9,6 +9,8 @@
 
 A small but production-ready RESTful API for a personal blogging platform. Built with **FastAPI**, **async SQLAlchemy**, and **SQLite**.
 
+Based on the [Blogging Platform API](https://roadmap.sh/projects/blogging-platform-api) project from [roadmap.sh](https://roadmap.sh).
+
 ## Features
 
 - Create, read, update, and delete blog posts
